@@ -1,5 +1,5 @@
 Qs = require 'qs'
-Rx = require 'rxjs'
+RxBehaviorSubject = require('rxjs/BehaviorSubject').BehaviorSubject
 
 getCurrentUrl = (mode) ->
   hash = window.location.hash.slice(1)
@@ -27,7 +27,7 @@ module.exports = class Router
   constructor: ->
     @mode = if window.history?.pushState then 'pathname' else 'hash'
     @hasRouted = false
-    @subject = new Rx.BehaviorSubject(@_parse())
+    @subject = new RxBehaviorSubject(@_parse())
 
     # some browsers erroneously call popstate on intial page load (iOS Safari)
     # We need to ignore that first event.
