@@ -1,5 +1,5 @@
-Qs = require 'qs'
-RxBehaviorSubject = require('rxjs/BehaviorSubject').BehaviorSubject
+import * as Rx from 'rxjs'
+import qs from 'qs-lite'
 
 getCurrentUrl = (mode) ->
   hash = window.location.hash.slice(1)
@@ -27,7 +27,7 @@ module.exports = class Router
   constructor: ->
     @mode = if window.history?.pushState then 'pathname' else 'hash'
     @hasRouted = false
-    @subject = new RxBehaviorSubject(@_parse())
+    @subject = new Rx.BehaviorSubject @_parse()
 
     # some browsers erroneously call popstate on intial page load (iOS Safari)
     # We need to ignore that first event.
@@ -42,7 +42,7 @@ module.exports = class Router
   _parse: (url) =>
     url ?= getCurrentUrl(@mode)
     {pathname, search} = parseUrl url
-    query = Qs.parse(search?.slice(1))
+    query = qs.parse search?.slice(1)
 
     hostname = window.location.hostname
 
