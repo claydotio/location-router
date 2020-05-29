@@ -23,7 +23,7 @@ parseUrl = (url) ->
   }
 
 
-module.exports = class Router
+export default class Router
   constructor: ->
     @mode = if window.history?.pushState then 'pathname' else 'hash'
     @hasRouted = false
